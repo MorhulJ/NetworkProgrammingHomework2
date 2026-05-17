@@ -3,39 +3,33 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-class SimpleSocketClient
-{
-    static void Main()
-    {
-        Socket clientSocket = new Socket(AddressFamily.InterNetwork,
-            SocketType.Stream,
-            ProtocolType.Tcp);
+Socket clientSocket = new Socket(AddressFamily.InterNetwork,
+        SocketType.Stream,
+        ProtocolType.Tcp);
 
-        IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Loopback, 5000);
+IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Loopback, 5000);
 
-        Console.WriteLine("Connecting to server 127.0.0.1:5000...");
+Console.WriteLine("Connecting to server 127.0.0.1:5000...");
 
-        clientSocket.Connect(serverEndPoint);
+clientSocket.Connect(serverEndPoint);
 
-        Console.WriteLine("Connected!");
+Console.WriteLine("Connected!");
 
-        string message = "Hello, server!";
-        byte[] data = Encoding.UTF8.GetBytes(message);
+string message = "Hello, server!";
+byte[] data = Encoding.UTF8.GetBytes(message);
 
-        clientSocket.Send(data);
+clientSocket.Send(data);
 
-        Console.WriteLine($"Sent: {message}");
+Console.WriteLine($"Sent: {message}");
 
-        byte[] buffer = new byte[1024];
-        int bytesReceived = clientSocket.Receive(buffer);
+byte[] buffer = new byte[1024];
+int bytesReceived = clientSocket.Receive(buffer);
 
-        string response = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
+string response = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
 
-        Console.WriteLine($"Received response: {response}");
+Console.WriteLine($"Received response: {response}");
 
-        clientSocket.Shutdown(SocketShutdown.Both);
-        clientSocket.Close();
+clientSocket.Shutdown(SocketShutdown.Both);
+clientSocket.Close();
 
-        Console.WriteLine("Connection closed");
-    }
-}
+Console.WriteLine("Connection closed");
